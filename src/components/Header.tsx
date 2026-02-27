@@ -1,43 +1,72 @@
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom"
 
+const Header=()=> {
+    const baseStyle = "px-3 py-2 rounded-md text-sm font-medium"
 
-const Header = () => {
     return (
-        <header style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
+        <header className="bg-white border-b shadow-sm ">
+            <div className="max-w-6xl mx-auto px-4 ">
+                <div className="flex items-center justify-between  h-16">
 
-            <nav style={{ display: "flex", gap: "1rem", marginTop: "0" }}>
-                <NavLink to="/"
-                         style={({ isActive }) => ({
-                             fontWeight: isActive ? "bold" : "normal",
-                             color: isActive ? "red" : "blue",
-                             gap: "1rem"
-                         })}
-                > <img src='../../public/MLB-Logo.webp' width={50} alt='MLB Logo'/>
-                    Home
-                </NavLink>
-                <NavLink to="/players"
-                           style={({ isActive }) => ({
-                             fontWeight: isActive ? "bold" : "normal",
-                             color: isActive ? "red" : "blue"
-                         })}
-                >Players
-                </NavLink>
-                <NavLink to="/teams"
-                           style={({ isActive }) => ({
-                             fontWeight: isActive ? "bold" : "normal",
-                             color: isActive ? "red" : "blue"
-                         })}
-                >Teams
-                </NavLink>
-                <NavLink to="/News"
-                           style={({ isActive }) => ({
-                             fontWeight: isActive ? "bold" : "normal",
-                             color: isActive ? "red" : "blue"
-                         })}
-                >news
-                </NavLink>
-            </nav>
+                    {/* Logo */}
+                    <NavLink to="/" className="text-xl font-bold text-blue-600">
+                       <img src='/MLB-Logo.webp' alt='Logo'
+                       className=' w-16 mx-3' />
+                        MLB App
+                    </NavLink>
+
+                    {/* Navigation */}
+                    <nav className="flex gap-2 ">
+                        <NavLink
+                            to="/"
+                            end
+                            className={({ isActive }) =>
+                                `${baseStyle} ${
+                                    isActive ? "bg-blue-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                                }`
+                            }
+                        >
+                            Home
+                        </NavLink>
+
+                        <NavLink
+                            to="/players"
+                            className={({ isActive }) =>
+                                `${baseStyle} ${
+                                    isActive ? "bg-blue-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                                }`
+                            }
+                        >
+                            Players
+                        </NavLink>
+
+                        <NavLink
+                            to="/teams"
+                            className={({ isActive }) =>
+                                `${baseStyle} ${
+                                    isActive ? "bg-blue-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                                }`
+                            }
+                        >
+                            Teams
+                        </NavLink>
+
+                        <NavLink
+                            to="/news"
+                            className={({ isActive }) =>
+                                `${baseStyle} ${
+                                    isActive ? "bg-blue-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                                }`
+                            }
+                        >
+                            News
+                        </NavLink>
+                    </nav>
+
+                </div>
+            </div>
         </header>
     )
 }
-export {Header};
+
+export {Header}
