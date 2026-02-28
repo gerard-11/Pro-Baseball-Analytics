@@ -5,6 +5,7 @@ import type {Team} from "../types/team.ts";
 
 export const Teams = () => {
     const [teams, setTeams] = useState<Team[]>([]);
+    const [selectedTeamKey, setSelectedTeamKey] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -12,11 +13,11 @@ export const Teams = () => {
             setTeams(data);
         };
         fetchData();
-    }, []);
+    }, [selectedTeamKey]);
 
     return (
         <div className="min-h-screen bg-gray-100 p-10">
-            <h1 className="text-3xl font-bold mb-8 text-center">
+            <h1 className="text-3xl font-bold mb-8 text-center text-blue-900">
                 MLB Teams
             </h1>
 
@@ -27,6 +28,7 @@ export const Teams = () => {
                         key={team.TeamID}
                         name={team.Name}
                         city={team.City}
+                        onClick={() => setSelectedTeamKey(team.Key)}
 
                     />
                 ))}
