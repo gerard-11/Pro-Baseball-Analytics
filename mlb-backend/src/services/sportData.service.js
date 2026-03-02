@@ -15,6 +15,6 @@ export const fetchAllTeamsFromApi = async () => {
     return response.data;
 };
 export const fetchPlayersByTeamsFromAPi = async (key) => {
-    const response= await sportdataClient.get(`/mlb/scores/json/PlayersBasic/${key}`);
+    const response= await sportdataClient.get(`/mlb/scores/json/Players/${key}`);
     return response.data;
 };
