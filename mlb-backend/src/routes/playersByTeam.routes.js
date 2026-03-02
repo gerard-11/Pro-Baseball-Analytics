@@ -7,7 +7,8 @@ router.get("/:key", async (req, res) => {
     const { params: { key } } = req;
     try {
         const players = await fetchPlayersByTeamsFromAPi(key);
-        return res.json(players);
+        const activePlayers = players.filter((player) => player.Status === "Active")
+        return res.json(activePlayers);
     } catch (error) {
         console.error("SPORTDATA ERROR:", error.response?.data);
         return res.status(500).json({ message: "Error fetching players" });

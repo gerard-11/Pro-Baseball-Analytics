@@ -5,7 +5,7 @@ import type {Team} from "../types/team.ts";
 
 export const Teams = () => {
     const [teams, setTeams] = useState<Team[]>([]);
-    const [selectedTeamKey, setSelectedTeamKey] = useState<string | null>(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -13,7 +13,7 @@ export const Teams = () => {
             setTeams(data);
         };
         fetchData();
-    }, [selectedTeamKey]);
+    }, []);
 
     return (
         <div className="min-h-screen bg-gray-100 p-10">
@@ -25,11 +25,10 @@ export const Teams = () => {
                 {teams.map((team ) => (
                     <TeamCard
                         logo={team.WikipediaLogoUrl}
-                        key={team.TeamID}
+                        key={team.TeamId}
                         name={team.Name}
                         city={team.City}
-                        onClick={() => setSelectedTeamKey(team.Key)}
-
+                        keyTeam={team.Key}
                     />
                 ))}
             </div>
