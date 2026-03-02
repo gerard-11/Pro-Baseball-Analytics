@@ -1,7 +1,4 @@
 import axios from "axios";
-import dotenv from "dotenv";
-
-
 
 const sportdataClient = axios.create({
     baseURL: "https://api.sportsdata.io/v3",
@@ -17,6 +14,7 @@ export const fetchAllTeamsFromApi = async () => {
 
     return response.data;
 };
-export const fetchStandingsFromAPI = async () => {
-    return sportdataClient.get("/mlb/scores/json/Standings/2026");
+export const fetchPlayersByTeamsFromAPi = async (key) => {
+    const response= await sportdataClient.get(`/mlb/scores/json/PlayersBasic/${key}`);
+    return response.data;
 };
