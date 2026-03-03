@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { fetchPlayersByTeamsFromAPi} from "../services/sportData.service.js";
+import {fetchAllTeamsFromApi, fetchPlayersByTeamsFromAPi} from "../services/sportData.service.js";
 
 const router = Router();
 
@@ -8,9 +8,25 @@ router.get("/:key", async (req, res) => {
     try {
         const players = await fetchPlayersByTeamsFromAPi(key);
         const activePlayers = players.filter((player) => player.Status === "Active")
-        return res.json(activePlayers);
+        const teams = await fetchAllTeamsFromApi(key);
+        const teamMatch = teams.find(t => String(t.Key).toLowerCase() === String(key).toLowerCase());
+
+        const teamData = {
+            name: teamMatch?.Name || "Team Not Found",
+            logo: teamMatch?.WikipediaLogoUrl || null
+        };
+        console.log('teamData',teamData);
+
+        return res.json({
+            team: teamData.name,
+            logo: teamData.logo,
+            activePlayers
+        });
+
+
+
     } catch (error) {
-        console.error("SPORTDATA ERROR:", error.response?.data);
+        console.error("SPORT DATA ERROR:", error.response?.data);
         return res.status(500).json({ message: "Error fetching players" });
     }
 });

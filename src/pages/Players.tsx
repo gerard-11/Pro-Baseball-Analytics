@@ -7,21 +7,23 @@ import {PlayerCard} from "../components/playerCard.tsx";
 
 const Players = () => {
     const [players, setPlayers] = useState<Player[]>([]);
+    const [team, setTeam] = useState([]);
     const { keyTeam } = useParams();
 
     useEffect(() => {
         if(!keyTeam) return;
         const fetchData = async () => {
-            const data = await getPlayersByTeam(keyTeam);
-            console.log(data);
-            setPlayers(data);
+            const {activePlayers, team} = await getPlayersByTeam(keyTeam);
+            setPlayers(activePlayers);
+            setTeam(team);
         };
         fetchData();
     }, [keyTeam]);
 
     return (
-
-    <div>
+<>
+    <h1 className="text-3xl text-center mb-3 font-bold text-red-700">{team}</h1>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {players.map((player) => (
             <PlayerCard
                 PhotoUrl={player.PhotoUrl}
@@ -36,6 +38,8 @@ const Players = () => {
         ))}
 
     </div>
+</>
+
 
 
     );

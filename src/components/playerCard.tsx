@@ -12,17 +12,30 @@ type PlayerCardProps = {
 
 const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName }:PlayerCardProps)=>{
     return (
-        <div style={{display: "flex",
-            flexWrap:"wrap",flexDirection: "column"}}>
-            <div style={{display: "flex",flexDirection: "column", justifyContent:"center",height: "300px", width: "300px"}}>
-                <img src={PhotoUrl} alt={FirstName} width="100px" height="100px" />
-                <h1>{FirstName} {LastName}</h1>
-                <p>Number: {Jersey}</p>
-                <p>Position: {Position}</p>
-                <p>BatHand: {BatHand}</p>
-                <p>Team: {Team}</p>
-            </div>
+        <div className="flex justify-center">
+            <div className="bg-white  border-4 border-blue-500 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 w-72 text-center">
 
+                <img
+                    src={PhotoUrl}
+                    alt={FirstName}
+                    className="w-24 h-24 mx-auto rounded-full object-cover border-4 border-blue-100 mb-4"
+                />
+
+                <h1 className="text-xl font-bold text-gray-800">
+                    {FirstName} {LastName}
+                </h1>
+
+                <p className="text-sm text-gray-500 mb-3">
+                    {Team}
+                </p>
+
+                <div className="space-y-1 text-sm text-gray-700">
+                    <p><span className="font-semibold">#</span> {Jersey}</p>
+                    <p><span className="font-semibold">Position:</span> {Position}</p>
+                    <p><span className="font-semibold">Bat:</span> {BatHand}</p>
+                </div>
+
+            </div>
         </div>
 
     )
