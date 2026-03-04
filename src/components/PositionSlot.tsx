@@ -34,7 +34,7 @@ export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotP
             ref={setNodeRef}
             className={`
                 flex flex-col items-center justify-center
-                w-56 h-72 rounded-xl border-4 border-dashed transition duration-300
+                w-44 h-56 rounded-xl border-4 border-dashed transition duration-300
                 ${showHighlight ? 'bg-green-100 border-green-500' : 'bg-gray-50 border-gray-300'}
                 ${player ? '' : 'hover:bg-gray-100'}
             `}

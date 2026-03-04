@@ -5,6 +5,7 @@ import type {Player} from "../types/player.ts";
 import {PlayerCard} from "../components/playerCard.tsx";
 import { useTeamContext } from "../context/TeamContext";
 import { useDreamTeamContext } from "../context/DreamTeamContext";
+import { Toast } from "../components/Toast.tsx";
 
 
 const Players = () => {
@@ -13,17 +14,29 @@ const Players = () => {
     const [logo,setLogo] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const [toastMessage, setToastMessage] = useState('');
+    const [showToast, setShowToast] = useState(false);
     const { keyTeam } = useParams();
     const navigate = useNavigate();
     const { setSelectedTeamKey, setTeamName, setTeamLogo, setPlayers: setContextPlayers } = useTeamContext();
-    const { addPlayer } = useDreamTeamContext();
+    const { dreamTeam, addPlayer, removePlayer } = useDreamTeamContext();
     console.log(players);
-
-    const { dreamTeam } = useDreamTeamContext();
 
     const handleAddToDreamTeam = (player: Player) => {
         addPlayer(player);
-        alert(`${player.FirstName} ${player.LastName} added to Dream Team!`);
+        setToastMessage(`${player.FirstName} ${player.LastName} added to Dream Team!`);
+        setShowToast(true);
+    };
+
+    const handleRemoveFromDreamTeam = (player: Player) => {
+        const dreamTeamPlayer = dreamTeam.players.find(
+            p => p.FirstName === player.FirstName && p.LastName === player.LastName && p.Team === player.Team
+        );
+        if (dreamTeamPlayer) {
+            removePlayer(dreamTeamPlayer.dreamTeamId);
+            setToastMessage(`${player.FirstName} ${player.LastName} removed from Dream Team!`);
+            setShowToast(true);
+        }
     };
 
     const isPlayerInDreamTeam = (player: Player) => {
@@ -65,6 +78,13 @@ const Players = () => {
 
     return (
         <>
+            <Toast
+                message={toastMessage}
+                isVisible={showToast}
+                onClose={() => setShowToast(false)}
+                duration={3000}
+            />
+
             {loading && (
                 <div className="text-center text-gray-600 py-8">
                     <p>Cargando jugadores...</p>
@@ -111,6 +131,7 @@ const Players = () => {
                                     Position={player.Position}
                                     BatHand={player.BatHand}
                                     onAddToDreamTeam={() => handleAddToDreamTeam(player)}
+                                    onRemoveFromDreamTeam={() => handleRemoveFromDreamTeam(player)}
                                     isInDreamTeam={isPlayerInDreamTeam(player)}
                                 />
                                 )

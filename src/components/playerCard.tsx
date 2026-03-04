@@ -9,10 +9,11 @@ type PlayerCardProps = {
     Jersey: Player["Jersey"],
     LastName: Player["LastName"],
     onAddToDreamTeam?: () => void,
+    onRemoveFromDreamTeam?: () => void,
     isInDreamTeam?: boolean,
 };
 
-const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName, onAddToDreamTeam, isInDreamTeam }:PlayerCardProps)=>{
+const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName, onAddToDreamTeam, onRemoveFromDreamTeam, isInDreamTeam }:PlayerCardProps)=>{
     return (
         <div className="flex justify-center">
             <div className="bg-white  border-4 border-blue-500 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 w-72 text-center">
@@ -37,24 +38,24 @@ const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName,
                 </div>
 
                 {onAddToDreamTeam && (
-                    <button
-                        onClick={onAddToDreamTeam}
-                        disabled={isInDreamTeam}
-                        className={`mt-4 w-full font-semibold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center gap-2 ${
-                            isInDreamTeam
-                                ? 'bg-gray-400 text-white cursor-not-allowed'
-                                : 'bg-green-500 hover:bg-green-600 text-white'
-                        }`}
-                    >
+                    <>
                         {isInDreamTeam ? (
-                            <>
+                            <button
+                                onClick={onRemoveFromDreamTeam}
+                                className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center gap-2"
+                            >
                                 <span>⭐</span>
-                                <span>Dream Team Player</span>
-                            </>
+                                <span>Remove from Dream Team</span>
+                            </button>
                         ) : (
-                            'Add to Dream Team'
+                            <button
+                                onClick={onAddToDreamTeam}
+                                className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                            >
+                                Add to Dream Team
+                            </button>
                         )}
-                    </button>
+                    </>
                 )}
             </div>
         </div>
