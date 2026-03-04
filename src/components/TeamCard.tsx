@@ -1,5 +1,6 @@
 import type {Team} from "../types/team";
 import {Link} from "react-router-dom";
+import { useTeamContext } from "../context/TeamContext";
 
 type TeamCardProps = {
     name: Team["Name"],
@@ -10,11 +11,18 @@ type TeamCardProps = {
 };
 
 export const TeamCard = ({name, city, logo, keyTeam}: TeamCardProps) => {
+    const { setSelectedTeamKey, setTeamName, setTeamLogo } = useTeamContext()
+
+    const handleTeamSelect = () => {
+        setSelectedTeamKey(keyTeam)
+        setTeamName(name)
+        setTeamLogo(logo ?? null)
+    }
 
     return (
         <div className="bg-white shadow-md rounded-xl p-6 hover:shadow-xl transition duration-300">
             {logo && (
-                <Link to={`/players/${keyTeam}`} >
+                <Link to={`/players/${keyTeam}`} onClick={handleTeamSelect}>
                     <img
                         src={logo}
                         alt={name}

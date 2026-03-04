@@ -61,13 +61,13 @@ export const DreamTeam = () => {
                     </p>
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        {/* Main Diamond */}
+                        {/* Main Field */}
                         <div className="lg:col-span-3">
-                            <div className="bg-white rounded-2xl shadow-lg p-8">
-                                {/* Baseball Diamond Layout */}
-                                <div className="flex flex-col items-center justify-center">
-                                    {/* Pitcher */}
-                                    <div className="mb-8">
+                            <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-blue-200">
+                                {/* Baseball Field with Grid Layout */}
+                                <div className="w-full">
+                                    {/* Top - Pitcher */}
+                                    <div className="flex justify-center mb-8">
                                         <PositionSlot
                                             position="P"
                                             player={dreamTeam.positions['P']}
@@ -75,14 +75,20 @@ export const DreamTeam = () => {
                                         />
                                     </div>
 
-                                    {/* Outfield Row */}
-                                    <div className="flex gap-8 mb-8 justify-center">
+                                    {/* Outfield row with CF in middle */}
+                                    <div className="flex justify-between gap-4 mb-12">
                                         <PositionSlot
                                             position="LF"
                                             player={dreamTeam.positions['LF']}
                                             onRemovePlayer={() => unassignPosition('LF')}
                                         />
-                                        <div className="w-56" />
+                                        <div className="flex-1 flex justify-center">
+                                            <PositionSlot
+                                                position="CF"
+                                                player={dreamTeam.positions['CF']}
+                                                onRemovePlayer={() => unassignPosition('CF')}
+                                            />
+                                        </div>
                                         <PositionSlot
                                             position="RF"
                                             player={dreamTeam.positions['RF']}
@@ -90,8 +96,8 @@ export const DreamTeam = () => {
                                         />
                                     </div>
 
-                                    {/* Infield Row 1 */}
-                                    <div className="flex gap-8 mb-8 justify-center">
+                                    {/* Infield - Top row (3B, SS, 2B) */}
+                                    <div className="flex justify-center gap-8 mb-8">
                                         <PositionSlot
                                             position="3B"
                                             player={dreamTeam.positions['3B']}
@@ -109,8 +115,8 @@ export const DreamTeam = () => {
                                         />
                                     </div>
 
-                                    {/* Infield Row 2 */}
-                                    <div className="flex gap-8 justify-center">
+                                    {/* Infield - Bottom row (1B, C) */}
+                                    <div className="flex justify-center gap-16">
                                         <PositionSlot
                                             position="1B"
                                             player={dreamTeam.positions['1B']}
@@ -121,16 +127,11 @@ export const DreamTeam = () => {
                                             player={dreamTeam.positions['C']}
                                             onRemovePlayer={() => unassignPosition('C')}
                                         />
-                                        <PositionSlot
-                                            position="CF"
-                                            player={dreamTeam.positions['CF']}
-                                            onRemovePlayer={() => unassignPosition('CF')}
-                                        />
                                     </div>
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="mt-8 flex gap-4 justify-center flex-wrap">
+                                <div className="mt-12 flex gap-4 justify-center flex-wrap">
                                     <button
                                         onClick={clearDreamTeam}
                                         className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300"
@@ -155,30 +156,33 @@ export const DreamTeam = () => {
 
                         {/* Available Players Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl shadow-lg p-6">
-                                <h2 className="text-xl font-bold text-gray-800 mb-4">
+                            <div className="bg-white rounded-2xl shadow-lg p-6 h-fit sticky top-8">
+                                <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                    <span>🏟️</span>
                                     Available Players ({availablePlayers.length})
                                 </h2>
-                                <div className="max-h-96 overflow-y-auto">
+                                <div className="max-h-[600px] overflow-y-auto">
                                     {availablePlayers.length === 0 ? (
-                                        <p className="text-center text-gray-500 py-8">
-                                            All players assigned!
-                                        </p>
+                                        <div className="text-center text-gray-500 py-8">
+                                            <p className="text-2xl mb-2">🎉</p>
+                                            <p>All players assigned!</p>
+                                        </div>
                                     ) : (
-                                        <div className="space-y-4">
+                                        <div className="space-y-3">
                                             {availablePlayers.map(player => (
                                                 <div
                                                     key={player.dreamTeamId}
-                                                    className="p-3 border-l-4 border-blue-500 bg-blue-50 rounded"
+                                                    draggable
+                                                    className="p-3 border-l-4 border-blue-500 bg-blue-50 rounded cursor-move hover:bg-blue-100 transition duration-200"
                                                 >
                                                     <p className="font-semibold text-sm text-gray-800">
                                                         {player.FirstName} {player.LastName}
                                                     </p>
-                                                    <p className="text-xs text-gray-600">
+                                                    <p className="text-xs text-gray-600 font-medium">
                                                         {player.Position}
                                                     </p>
                                                     <p className="text-xs text-gray-500">
-                                                        {player.Team}
+                                                        {player.Team} #{player.Jersey}
                                                     </p>
                                                     <button
                                                         onClick={() => removePlayer(player.dreamTeamId)}

@@ -9,9 +9,10 @@ type PlayerCardProps = {
     Jersey: Player["Jersey"],
     LastName: Player["LastName"],
     onAddToDreamTeam?: () => void,
+    isInDreamTeam?: boolean,
 };
 
-const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName, onAddToDreamTeam }:PlayerCardProps)=>{
+const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName, onAddToDreamTeam, isInDreamTeam }:PlayerCardProps)=>{
     return (
         <div className="flex justify-center">
             <div className="bg-white  border-4 border-blue-500 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 w-72 text-center">
@@ -38,9 +39,21 @@ const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName,
                 {onAddToDreamTeam && (
                     <button
                         onClick={onAddToDreamTeam}
-                        className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                        disabled={isInDreamTeam}
+                        className={`mt-4 w-full font-semibold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center gap-2 ${
+                            isInDreamTeam
+                                ? 'bg-gray-400 text-white cursor-not-allowed'
+                                : 'bg-green-500 hover:bg-green-600 text-white'
+                        }`}
                     >
-                        Add to Dream Team
+                        {isInDreamTeam ? (
+                            <>
+                                <span>⭐</span>
+                                <span>Dream Team Player</span>
+                            </>
+                        ) : (
+                            'Add to Dream Team'
+                        )}
                     </button>
                 )}
             </div>

@@ -19,9 +19,17 @@ const Players = () => {
     const { addPlayer } = useDreamTeamContext();
     console.log(players);
 
+    const { dreamTeam } = useDreamTeamContext();
+
     const handleAddToDreamTeam = (player: Player) => {
         addPlayer(player);
         alert(`${player.FirstName} ${player.LastName} added to Dream Team!`);
+    };
+
+    const isPlayerInDreamTeam = (player: Player) => {
+        return dreamTeam.players.some(
+            p => p.FirstName === player.FirstName && p.LastName === player.LastName && p.Team === player.Team
+        );
     };
 
     useEffect(() => {
@@ -103,6 +111,7 @@ const Players = () => {
                                     Position={player.Position}
                                     BatHand={player.BatHand}
                                     onAddToDreamTeam={() => handleAddToDreamTeam(player)}
+                                    isInDreamTeam={isPlayerInDreamTeam(player)}
                                 />
                                 )
                         )}
