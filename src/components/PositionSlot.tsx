@@ -40,13 +40,11 @@ export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotP
             `}
         >
             {player ? (
-                <div onClick={(e) => e.stopPropagation()}>
-                    <DreamTeamCard
-                        player={player}
-                        position={position}
-                        onRemove={onRemovePlayer}
-                    />
-                </div>
+                <DreamTeamCard
+                    player={player}
+                    position={position}
+                    onRemove={onRemovePlayer}
+                />
             ) : (
                 <div className="text-center pointer-events-none">
                     <p className="text-lg font-bold text-gray-500">{position}</p>
