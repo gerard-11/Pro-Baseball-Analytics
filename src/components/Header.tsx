@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom"
+import { useTeamContext } from "../context/TeamContext"
 
 const Header=()=> {
     const baseStyle = "px-3 py-2 rounded-md text-sm font-medium"
+    const { selectedTeamKey } = useTeamContext()
 
     return (
         <header className="bg-white border-b shadow-sm ">
@@ -29,16 +31,18 @@ const Header=()=> {
                             Home
                         </NavLink>
 
-                        <NavLink
-                            to="/players"
-                            className={({ isActive }) =>
-                                `${baseStyle} ${
-                                    isActive ? "bg-blue-500 text-white" : "text-gray-700 hover:bg-gray-100"
-                                }`
-                            }
-                        >
-                            Players
-                        </NavLink>
+                        {selectedTeamKey && (
+                            <NavLink
+                                to={`/players/${selectedTeamKey}`}
+                                className={({ isActive }) =>
+                                    `${baseStyle} ${
+                                        isActive ? "bg-blue-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                                    }`
+                                }
+                            >
+                                Players
+                            </NavLink>
+                        )}
 
                         <NavLink
                             to="/teams"
@@ -49,6 +53,17 @@ const Header=()=> {
                             }
                         >
                             Teams
+                        </NavLink>
+
+                        <NavLink
+                            to="/dreamteam"
+                            className={({ isActive }) =>
+                                `${baseStyle} ${
+                                    isActive ? "bg-green-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                                }`
+                            }
+                        >
+                            Dream Team
                         </NavLink>
 
                         <NavLink

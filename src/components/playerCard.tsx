@@ -8,13 +8,13 @@ type PlayerCardProps = {
     BatHand: Player["BatHand"],
     Jersey: Player["Jersey"],
     LastName: Player["LastName"],
+    onAddToDreamTeam?: () => void,
 };
 
-const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName }:PlayerCardProps)=>{
+const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName, onAddToDreamTeam }:PlayerCardProps)=>{
     return (
         <div className="flex justify-center">
             <div className="bg-white  border-4 border-blue-500 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 w-72 text-center">
-
                 <img
                     src={PhotoUrl}
                     alt={FirstName}
@@ -35,6 +35,14 @@ const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName 
                     <p><span className="font-semibold">Bat:</span> {BatHand}</p>
                 </div>
 
+                {onAddToDreamTeam && (
+                    <button
+                        onClick={onAddToDreamTeam}
+                        className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                    >
+                        Add to Dream Team
+                    </button>
+                )}
             </div>
         </div>
 

@@ -6,18 +6,26 @@ import { Players} from "./pages/Players.tsx";
 import Layout from "./Layout.tsx";
 import {Teams} from "./pages/Teams.tsx";
 import {News} from "./pages/News.tsx";
+import { TeamProvider } from './context/TeamContext.tsx';
+import { DreamTeamProvider } from './context/DreamTeamContext.tsx';
+import { DreamTeam } from './pages/DreamTeam.tsx';
 
 function App() {
 
   return (
-    <Routes>
-        <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='players/:keyTeam' element={<Players/>}/>
-            <Route path='teams' element={<Teams/>}/>
-            <Route path='news' element={<News/>}/>
-        </Route>
-    </Routes>
+    <TeamProvider>
+      <DreamTeamProvider>
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path='players/:keyTeam' element={<Players/>}/>
+                <Route path='teams' element={<Teams/>}/>
+                <Route path='news' element={<News/>}/>
+                <Route path='dreamteam' element={<DreamTeam/>}/>
+            </Route>
+        </Routes>
+      </DreamTeamProvider>
+    </TeamProvider>
   )
 }
 
