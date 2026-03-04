@@ -15,7 +15,7 @@ const Players = () => {
     const [loading, setLoading] = useState(true);
     const { keyTeam } = useParams();
     const navigate = useNavigate();
-    const { selectedTeamKey, setSelectedTeamKey, teamName, setTeamName, teamLogo, setTeamLogo, players: contextPlayers, setPlayers: setContextPlayers } = useTeamContext();
+    const { setSelectedTeamKey, setTeamName, setTeamLogo, setPlayers: setContextPlayers } = useTeamContext();
     const { addPlayer } = useDreamTeamContext();
     console.log(players);
 
@@ -30,17 +30,7 @@ const Players = () => {
             return;
         }
 
-        // Si el team coincide con el seleccionado y tenemos datos en context, usarlos
-        if (selectedTeamKey === keyTeam && contextPlayers.length > 0 && teamName && teamLogo) {
-            console.log("👥 Using cached players from context");
-            setPlayers(contextPlayers);
-            setTeam(teamName);
-            setLogo(teamLogo);
-            setLoading(false);
-            return;
-        }
-
-        // Si no, hacer la llamada a la API
+        // Siempre hacer fetch cuando keyTeam cambia para evitar cache stale
         const fetchData = async () => {
             try {
                 setLoading(true);
@@ -63,7 +53,7 @@ const Players = () => {
             }
         };
         fetchData();
-    }, [keyTeam, navigate, selectedTeamKey, setSelectedTeamKey, teamName, setTeamName, teamLogo, setTeamLogo, contextPlayers, setContextPlayers]);
+    }, [keyTeam, navigate, setSelectedTeamKey, setTeamName, setTeamLogo, setContextPlayers]);
 
     return (
         <>
