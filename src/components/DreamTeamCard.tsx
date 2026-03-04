@@ -22,22 +22,22 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
             {...listeners}
             {...attributes}
             className={`
-                bg-white border-4 border-blue-500 rounded-lg shadow-md hover:shadow-xl
-                transition duration-300 p-3 w-48 text-center cursor-move
+                bg-white border-3 border-blue-500 rounded-lg shadow-md hover:shadow-xl
+                transition duration-300 p-2 w-40 text-center cursor-move
                 ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
             `}
         >
             <img
                 src={player.PhotoUrl}
                 alt={player.FirstName}
-                className="w-16 h-16 mx-auto rounded-full object-cover border-3 border-blue-100 mb-2"
+                className="w-12 h-12 mx-auto rounded-full object-cover border-2 border-blue-100 mb-1"
             />
 
-            <h2 className="text-base font-bold text-gray-800">
+            <h2 className="text-sm font-bold text-gray-800 line-clamp-2">
                 {player.FirstName} {player.LastName}
             </h2>
 
-            <p className="text-xs text-gray-500 mb-1">
+            <p className="text-xs text-gray-500">
                 {player.Team}
             </p>
 
@@ -48,8 +48,12 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
 
             {onRemove && (
                 <button
-                    onClick={onRemove}
-                    className="mt-2 w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded text-xs transition duration-300"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        onRemove();
+                    }}
+                    className="mt-1 w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-0.5 px-2 rounded text-xs transition duration-300"
                 >
                     Remove
                 </button>

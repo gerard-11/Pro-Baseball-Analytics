@@ -157,12 +157,28 @@ export const DreamTeam = () => {
 
                         {/* Available Players Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl shadow-lg p-6 h-fit sticky top-8">
+                            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
                                 <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                                     <span>🏟️</span>
                                     Available Players ({availablePlayers.length})
                                 </h2>
-                                <div className="max-h-[600px] overflow-y-auto">
+                                <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
+                                    <style>{`
+                                        div::-webkit-scrollbar {
+                                            width: 6px;
+                                        }
+                                        div::-webkit-scrollbar-track {
+                                            background: #f1f1f1;
+                                            border-radius: 10px;
+                                        }
+                                        div::-webkit-scrollbar-thumb {
+                                            background: #3b82f6;
+                                            border-radius: 10px;
+                                        }
+                                        div::-webkit-scrollbar-thumb:hover {
+                                            background: #2563eb;
+                                        }
+                                    `}</style>
                                     {availablePlayers.length === 0 ? (
                                         <div className="text-center text-gray-500 py-8">
                                             <p className="text-2xl mb-2">🎉</p>
