@@ -2,6 +2,7 @@ import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { useDreamTeamContext } from '../context/DreamTeamContext';
 import { PositionSlot } from '../components/PositionSlot';
+import { AvailablePlayerItem } from '../components/AvailablePlayerItem';
 import type { Position } from '../types/dreamTeam';
 
 export const DreamTeam = () => {
@@ -170,27 +171,11 @@ export const DreamTeam = () => {
                                     ) : (
                                         <div className="space-y-3">
                                             {availablePlayers.map(player => (
-                                                <div
+                                                <AvailablePlayerItem
                                                     key={player.dreamTeamId}
-                                                    draggable
-                                                    className="p-3 border-l-4 border-blue-500 bg-blue-50 rounded cursor-move hover:bg-blue-100 transition duration-200"
-                                                >
-                                                    <p className="font-semibold text-sm text-gray-800">
-                                                        {player.FirstName} {player.LastName}
-                                                    </p>
-                                                    <p className="text-xs text-gray-600 font-medium">
-                                                        {player.Position}
-                                                    </p>
-                                                    <p className="text-xs text-gray-500">
-                                                        {player.Team} #{player.Jersey}
-                                                    </p>
-                                                    <button
-                                                        onClick={() => removePlayer(player.dreamTeamId)}
-                                                        className="mt-2 w-full bg-red-500 hover:bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded transition duration-300"
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
+                                                    player={player}
+                                                    onRemove={() => removePlayer(player.dreamTeamId)}
+                                                />
                                             ))}
                                         </div>
                                     )}
