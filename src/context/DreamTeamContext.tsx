@@ -28,7 +28,6 @@ const getInitialState = (): DreamTeamState => {
         'RF': null,
         'P': null,
     };
-
     return {
         players: [],
         positions,
@@ -63,7 +62,6 @@ export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
             ...player,
             dreamTeamId,
         };
-
         setDreamTeam(prev => ({
             ...prev,
             players: [...prev.players, dreamTeamPlayer],
@@ -73,14 +71,12 @@ export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
     const removePlayer = (playerId: string) => {
         setDreamTeam(prev => {
             const updatedPositions = { ...prev.positions };
-
-            // Find and clear any position this player occupies
             (Object.keys(updatedPositions) as Position[]).forEach(pos => {
                 if (updatedPositions[pos]?.dreamTeamId === playerId) {
                     updatedPositions[pos] = null;
                 }
             });
-
+            console.log('click on remove')
             return {
                 ...prev,
                 players: prev.players.filter(p => p.dreamTeamId !== playerId),
@@ -92,7 +88,6 @@ export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
     const assignPosition = (playerId: string, position: Position): boolean => {
         const player = dreamTeam.players.find(p => p.dreamTeamId === playerId);
         if (!player) return false;
-
         // Validate position matches
         if (player.Position !== position) {
             alert(`${player.FirstName} ${player.LastName} plays ${player.Position}, not ${position}.`);

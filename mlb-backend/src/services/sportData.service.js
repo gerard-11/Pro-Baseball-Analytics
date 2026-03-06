@@ -39,12 +39,7 @@ export const fetchPlayersByTeamsFromAPi = async (key) => {
         if (cachedPlayers) {
             return cachedPlayers;
         }
-
-        console.log(`📡 Making request to SportsData API for team ${key}...`);
         const response = await sportdataClient.get(`/mlb/scores/json/Players/${key}`);
-        console.log(`✅ SportsData response: ${response.status}, ${response.data?.length || 0} players`);
-
-        // Guardar en cache
         cache.set(cacheKey, response.data);
         return response.data;
     } catch (error) {
@@ -54,9 +49,6 @@ export const fetchPlayersByTeamsFromAPi = async (key) => {
             message: error.message,
             url: error.config?.url
         });
-
-        // Fallback a datos mock
-        console.log(`📦 Using mock data as fallback for team ${key}...`);
         const mockPlayers = mockPlayersByTeam[key] || [];
         cache.set(`players_${key}`, mockPlayers);
         return mockPlayers;

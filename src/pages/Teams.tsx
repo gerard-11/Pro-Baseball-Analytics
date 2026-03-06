@@ -12,13 +12,10 @@ export const Teams = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                console.log("🏟️ Teams component: Starting fetch...");
                 const data = await getTeams();
-                console.log("🏟️ Teams component: Data received, setting state...", data);
                 setTeams(data);
                 setError(null);
             } catch (err) {
-                console.error("🏟️ Teams component: Error:", err);
                 setError(err instanceof Error ? err.message : "Error al cargar equipos");
             } finally {
                 setLoading(false);

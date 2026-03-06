@@ -20,7 +20,6 @@ const Players = () => {
     const navigate = useNavigate();
     const { setSelectedTeamKey, setTeamName, setTeamLogo, setPlayers: setContextPlayers } = useTeamContext();
     const { dreamTeam, addPlayer, removePlayer } = useDreamTeamContext();
-    console.log(players);
 
     const handleAddToDreamTeam = (player: Player) => {
         addPlayer(player);

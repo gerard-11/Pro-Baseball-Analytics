@@ -35,6 +35,7 @@ export const AvailablePlayerItem = ({ player, onRemove }: AvailablePlayerItemPro
                 {player.Team} #{player.Jersey}
             </p>
             <button
+                onPointerDown={(e) => e.stopPropagation()}
                 onClick={onRemove}
                 className="mt-2 w-full bg-red-500 hover:bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded transition duration-300"
             >
