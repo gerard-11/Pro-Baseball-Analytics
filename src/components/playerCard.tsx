@@ -15,8 +15,8 @@ type PlayerCardProps = {
 
 const PlayerCard= ({FirstName, PhotoUrl, Jersey, Team,Position,BatHand,LastName, onAddToDreamTeam, onRemoveFromDreamTeam, isInDreamTeam }:PlayerCardProps)=>{
     return (
-        <div className="flex justify-center">
-            <div className="bg-white  border-4 border-blue-500 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 w-72 text-center">
+        <div className="flex justify-center w-full h-full">
+            <div className="bg-white  border-4 border-blue-500 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 w-full max-w-sm text-center">
                 <img
                     src={PhotoUrl}
                     alt={FirstName}

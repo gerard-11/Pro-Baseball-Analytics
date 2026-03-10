@@ -9,6 +9,7 @@ import {News} from "./pages/News.tsx";
 import { TeamProvider } from './context/TeamContext.tsx';
 import { DreamTeamProvider } from './context/DreamTeamContext.tsx';
 import { DreamTeam } from './pages/DreamTeam.tsx';
+import { Search } from './pages/Search.tsx';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path='players/:keyTeam' element={<Players/>}/>
                 <Route path='teams' element={<Teams/>}/>
+                <Route path='search' element={<Search/>}/>
                 <Route path='news' element={<News/>}/>
                 <Route path='dreamteam' element={<DreamTeam/>}/>
             </Route>

@@ -17,7 +17,8 @@ const POSITION_NAMES: Record<Position, string> = {
     'LF': 'Left Field',
     'CF': 'Center Field',
     'RF': 'Right Field',
-    'P': 'Pitcher',
+    'SP': 'Starting Pitcher',
+    'RP': 'Relief Pitcher',
 };
 
 export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotProps) => {
@@ -29,12 +30,14 @@ export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotP
     const isValidDrag = active && (active.data as any)?.player?.Position === position;
     const showHighlight = isOver && isValidDrag;
 
+    const sizeClasses = 'w-32 h-40';
+
     return (
         <div
             ref={setNodeRef}
             className={`
                 flex flex-col items-center justify-center
-                w-40 h-48 rounded-lg border-3 border-dashed transition duration-300
+                ${sizeClasses} rounded-lg border-3 border-dashed transition duration-300
                 ${showHighlight ? 'bg-green-100 border-green-500' : 'bg-gray-50 border-gray-300'}
                 ${player ? '' : 'hover:bg-gray-100'}
             `}

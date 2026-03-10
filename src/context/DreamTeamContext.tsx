@@ -26,7 +26,8 @@ const getInitialState = (): DreamTeamState => {
         'LF': null,
         'CF': null,
         'RF': null,
-        'P': null,
+        'SP': null,
+        'RP': null,
     };
     return {
         players: [],
@@ -34,26 +35,31 @@ const getInitialState = (): DreamTeamState => {
     };
 };
 
-export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
-    const [dreamTeam, setDreamTeam] = useState<DreamTeamState>(getInitialState());
-
-    // Load from localStorage on mount
-    useEffect(() => {
+const getInitialStateFromStorage = (): DreamTeamState => {
+    try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
-            try {
-                const data = JSON.parse(stored) as DreamTeamState;
-                setDreamTeam(data);
-            } catch (error) {
-                console.error('Error loading dream team from localStorage:', error);
-                localStorage.removeItem(STORAGE_KEY);
-            }
+            const data = JSON.parse(stored) as DreamTeamState;
+            return data;
         }
-    }, []);
+    } catch (error) {
+        console.error('Error loading dream team from localStorage:', error);
+        localStorage.removeItem(STORAGE_KEY);
+    }
+    return getInitialState();
+};
+
+export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
+    const [dreamTeam, setDreamTeam] = useState<DreamTeamState>(()=>getInitialStateFromStorage());
 
     // Save to localStorage whenever dreamTeam changes
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(dreamTeam));
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(dreamTeam));
+            console.log('💾 Dream Team saved to localStorage');
+        } catch (error) {
+            console.error('Error saving dream team to localStorage:', error);
+        }
     }, [dreamTeam]);
 
     const addPlayer = (player: Player) => {
@@ -76,7 +82,6 @@ export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
                     updatedPositions[pos] = null;
                 }
             });
-            console.log('click on remove')
             return {
                 ...prev,
                 players: prev.players.filter(p => p.dreamTeamId !== playerId),
@@ -88,9 +93,21 @@ export const DreamTeamProvider = ({ children }: { children: ReactNode }) => {
     const assignPosition = (playerId: string, position: Position): boolean => {
         const player = dreamTeam.players.find(p => p.dreamTeamId === playerId);
         if (!player) return false;
-        // Validate position matches
-        if (player.Position !== position) {
-            alert(`${player.FirstName} ${player.LastName} plays ${player.Position}, not ${position}.`);
+
+        // Validate position matches (SP and RP can accept P position)
+        const isValidPosition = player.Position === position ||
+            ((position === 'SP' || position === 'RP') && player.Position === 'P');
+
+        if (!isValidPosition) {
+            // Dispatch custom event for toast notification
+            window.dispatchEvent(
+                new CustomEvent('showToast', {
+                    detail: {
+                        message: `${player.FirstName} ${player.LastName} plays ${player.Position}, not ${position}.`,
+                        type: 'error',
+                    },
+                })
+            );
             return false;
         }
 

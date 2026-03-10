@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTeams } from "../api/allTeams.service.ts";
 import {TeamCard} from "../components/TeamCard";
+import { Loader } from "../components/Loader";
 import type {Team} from "../types/team.ts";
 
 export const Teams = () => {
@@ -30,11 +31,7 @@ export const Teams = () => {
                 MLB Teams
             </h1>
 
-            {loading && (
-                <div className="text-center text-gray-600">
-                    <p>Cargando equipos...</p>
-                </div>
-            )}
+            {loading && <Loader message="Cargando equipos..." size="large" />}
 
             {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">

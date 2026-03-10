@@ -6,6 +6,8 @@ import {PlayerCard} from "../components/playerCard.tsx";
 import { useTeamContext } from "../context/TeamContext";
 import { useDreamTeamContext } from "../context/DreamTeamContext";
 import { Toast } from "../components/Toast.tsx";
+import { Loader } from "../components/Loader.tsx";
+import type { ToastType } from "../components/Toast";
 
 
 const Players = () => {
@@ -16,6 +18,7 @@ const Players = () => {
     const [loading, setLoading] = useState(true);
     const [toastMessage, setToastMessage] = useState('');
     const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState<ToastType>('success');
     const { keyTeam } = useParams();
     const navigate = useNavigate();
     const { setSelectedTeamKey, setTeamName, setTeamLogo, setPlayers: setContextPlayers } = useTeamContext();
@@ -24,6 +27,7 @@ const Players = () => {
     const handleAddToDreamTeam = (player: Player) => {
         addPlayer(player);
         setToastMessage(`${player.FirstName} ${player.LastName} added to Dream Team!`);
+        setToastType('success');
         setShowToast(true);
     };
 
@@ -34,6 +38,7 @@ const Players = () => {
         if (dreamTeamPlayer) {
             removePlayer(dreamTeamPlayer.dreamTeamId);
             setToastMessage(`${player.FirstName} ${player.LastName} removed from Dream Team!`);
+            setToastType('success');
             setShowToast(true);
         }
     };
@@ -82,13 +87,10 @@ const Players = () => {
                 isVisible={showToast}
                 onClose={() => setShowToast(false)}
                 duration={3000}
+                type={toastType}
             />
 
-            {loading && (
-                <div className="text-center text-gray-600 py-8">
-                    <p>Cargando jugadores...</p>
-                </div>
-            )}
+            {loading && <Loader message="Cargando jugadores..." size="large" />}
 
             {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -118,25 +120,46 @@ const Players = () => {
                             <div className="h-1.5 w-24 bg-blue-700 mt-1 rounded-full"></div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {players.map((player) => (
-                                <PlayerCard
-                                    PhotoUrl={player.PhotoUrl}
-                                    key={player.Jersey}
-                                    Jersey={player.Jersey}
-                                    FirstName={player.FirstName}
-                                    LastName={player.LastName}
-                                    Team={player.Team}
-                                    Position={player.Position}
-                                    BatHand={player.BatHand}
-                                    onAddToDreamTeam={() => handleAddToDreamTeam(player)}
-                                    onRemoveFromDreamTeam={() => handleRemoveFromDreamTeam(player)}
-                                    isInDreamTeam={isPlayerInDreamTeam(player)}
-                                />
-                                )
-                        )}
 
-                    </div>
+                    {players.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-dashed border-gray-300">
+                            <div className="text-6xl mb-4">📋</div>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-2">No hay datos disponibles</h2>
+                            <p className="text-gray-600 text-center max-w-md mb-4">
+                                No se encontraron jugadores activos para <span className="font-semibold">{team}</span>. Esto podría significar que:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-2 mb-6">
+                                <li>✓ Los datos aún se están cargando desde la API</li>
+                                <li>✓ La API externa no tiene información para este equipo</li>
+                                <li>✓ No hay jugadores activos registrados</li>
+                            </ul>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition duration-300"
+                            >
+                                Reintentar
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+                            {players.map((player, index) => (
+                                    <PlayerCard
+                                        PhotoUrl={player.PhotoUrl}
+                                        key={`${player.Team}-${player.Jersey}-${index}`}
+                                        Jersey={player.Jersey}
+                                        FirstName={player.FirstName}
+                                        LastName={player.LastName}
+                                        Team={player.Team}
+                                        Position={player.Position}
+                                        BatHand={player.BatHand}
+                                        onAddToDreamTeam={() => handleAddToDreamTeam(player)}
+                                        onRemoveFromDreamTeam={() => handleRemoveFromDreamTeam(player)}
+                                        isInDreamTeam={isPlayerInDreamTeam(player)}
+                                    />
+                                    )
+                            )}
+                        </div>
+                    )}
                 </>
             )}
         </>

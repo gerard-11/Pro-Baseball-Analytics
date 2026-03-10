@@ -1,17 +1,42 @@
 import { DndContext } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
+import { useState, useEffect } from 'react';
 import { useDreamTeamContext } from '../context/DreamTeamContext';
 import { PositionSlot } from '../components/PositionSlot';
 import { AvailablePlayerItem } from '../components/AvailablePlayerItem';
+import { Toast } from '../components/Toast';
 import type { Position } from '../types/dreamTeam';
+import type { ToastType } from '../components/Toast';
 
 export const DreamTeam = () => {
     const { dreamTeam, assignPosition, unassignPosition, removePlayer, clearDreamTeam } =
         useDreamTeamContext();
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVisible, setToastVisible] = useState(false);
+    const [toastType, setToastType] = useState<ToastType>('success');
 
     const availablePlayers = dreamTeam.players.filter(player => {
         return !Object.values(dreamTeam.positions).some(p => p?.dreamTeamId === player.dreamTeamId);
     });
+
+    useEffect(() => {
+        // Listen for toast events from context
+        const handleShowToast = (event: Event) => {
+            const customEvent = event as CustomEvent;
+            setToastMessage(customEvent.detail.message);
+            setToastType(customEvent.detail.type || 'success');
+            setToastVisible(true);
+        };
+
+        window.addEventListener('showToast', handleShowToast);
+        return () => window.removeEventListener('showToast', handleShowToast);
+    }, []);
+
+    const showToast = (message: string, type: ToastType = 'success') => {
+        setToastMessage(message);
+        setToastType(type);
+        setToastVisible(true);
+    };
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
@@ -21,32 +46,47 @@ export const DreamTeam = () => {
         const playerId = active.id as string;
         const targetPosition = over.id as Position;
 
-        assignPosition(playerId, targetPosition);
+        const success = assignPosition(playerId, targetPosition);
+        if (success) {
+            const player = dreamTeam.players.find(p => p.dreamTeamId === playerId);
+            if (player) {
+                showToast(`${player.FirstName} ${player.LastName} assigned to ${targetPosition}`, 'success');
+            }
+        }
     };
 
     const handleExport = () => {
-        const exportData = {
-            timestamp: new Date().toISOString(),
-            dreamTeam: dreamTeam.positions,
-            players: dreamTeam.players,
-        };
-        const dataStr = JSON.stringify(exportData, null, 2);
-        const dataBlob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(dataBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `dream-team-${Date.now()}.json`;
-        link.click();
-        URL.revokeObjectURL(url);
+        try {
+            const exportData = {
+                timestamp: new Date().toISOString(),
+                dreamTeam: dreamTeam.positions,
+                players: dreamTeam.players,
+            };
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `dream-team-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            showToast('Dream Team exported successfully!', 'success');
+        } catch (error) {
+            showToast('Error exporting Dream Team', 'error');
+        }
     };
 
     const handleCopy = () => {
-        const exportData = {
-            timestamp: new Date().toISOString(),
-            dreamTeam: dreamTeam.positions,
-        };
-        navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
-        alert('Dream Team copied to clipboard!');
+        try {
+            const exportData = {
+                timestamp: new Date().toISOString(),
+                dreamTeam: dreamTeam.positions,
+            };
+            navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
+            showToast('Dream Team copied to clipboard!', 'success');
+        } catch (error) {
+            showToast('Error copying to clipboard', 'error');
+        }
     };
 
     return (
@@ -61,23 +101,28 @@ export const DreamTeam = () => {
                         Drag players to their positions to build your perfect lineup
                     </p>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 min-h-96">
                         {/* Main Field */}
                         <div className="lg:col-span-3">
-                            <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-blue-200">
+                            <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-blue-200 flex flex-col">
                                 {/* Baseball Field with Grid Layout */}
-                                <div className="w-full">
-                                    {/* Top - Pitcher */}
-                                    <div className="flex justify-center mb-8">
+                                <div className="w-full flex-1 flex flex-col">
+                                    {/* Top - Pitchers (SP and RP) */}
+                                    <div className="flex justify-center gap-4 items-start mt-8">
                                         <PositionSlot
-                                            position="P"
-                                            player={dreamTeam.positions['P']}
-                                            onRemovePlayer={() => unassignPosition('P')}
+                                            position="SP"
+                                            player={dreamTeam.positions['SP']}
+                                            onRemovePlayer={() => unassignPosition('SP')}
+                                        />
+                                        <PositionSlot
+                                            position="RP"
+                                            player={dreamTeam.positions['RP']}
+                                            onRemovePlayer={() => unassignPosition('RP')}
                                         />
                                     </div>
 
                                     {/* Outfield row with CF in middle */}
-                                    <div className="flex justify-between gap-4 mb-12">
+                                    <div className="flex justify-between gap-4 items-start mt-8">
                                         <PositionSlot
                                             position="LF"
                                             player={dreamTeam.positions['LF']}
@@ -98,7 +143,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Infield - Top row (3B, SS, 2B) */}
-                                    <div className="flex justify-center gap-8 mb-8">
+                                    <div className="flex justify-center gap-8 items-start mt-8">
                                         <PositionSlot
                                             position="3B"
                                             player={dreamTeam.positions['3B']}
@@ -117,7 +162,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Infield - Bottom row (1B, C) */}
-                                    <div className="flex justify-center gap-16">
+                                    <div className="flex justify-center gap-16 items-start mt-8">
                                         <PositionSlot
                                             position="1B"
                                             player={dreamTeam.positions['1B']}
@@ -132,7 +177,7 @@ export const DreamTeam = () => {
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="mt-12 flex gap-4 justify-center flex-wrap">
+                                <div className="mt-8 flex gap-4 justify-center flex-wrap">
                                     <button
                                         onClick={clearDreamTeam}
                                         className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300"
@@ -157,7 +202,7 @@ export const DreamTeam = () => {
 
                         {/* Available Players Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
+                            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8 h-fit">
                                 <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                                     <span>🏟️</span>
                                     Available Players ({availablePlayers.length})
@@ -201,6 +246,13 @@ export const DreamTeam = () => {
                     </div>
                 </div>
             </div>
+
+            <Toast
+                message={toastMessage}
+                isVisible={toastVisible}
+                onClose={() => setToastVisible(false)}
+                type={toastType}
+            />
         </DndContext>
     );
 };

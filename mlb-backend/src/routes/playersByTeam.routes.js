@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {fetchAllTeamsFromApi, fetchPlayersByTeamsFromAPi} from "../services/sportData.service.js";
+import { getPlayerHeadshot } from "../services/mlbHeadshots.service.js";
 
 const router = Router();
 
@@ -19,12 +20,29 @@ router.get("/:key", async (req, res) => {
             logo: teamMatch?.WikipediaLogoUrl || null
         };
 
-        console.log(`✅ Response ready for ${teamData.name}: ${activePlayers.length} players`);
+        // Obtener headshots para cada jugador
+        console.log(`🖼️ Fetching headshots for ${activePlayers.length} players...`);
+        const playersWithHeadshots = await Promise.all(
+            activePlayers.map(async (player) => {
+                try {
+                    const photoUrl = await getPlayerHeadshot(player.FirstName, player.LastName);
+                    return {
+                        ...player,
+                        PhotoUrl: photoUrl || player.PhotoUrl // Usa la URL obtenida o la existente
+                    };
+                } catch (error) {
+                    console.warn(`⚠️ Could not fetch headshot for ${player.FirstName} ${player.LastName}`);
+                    return player; // Retorna el jugador sin cambios si hay error
+                }
+            })
+        );
+
+        console.log(`✅ Response ready for ${teamData.name}: ${playersWithHeadshots.length} players`);
 
         return res.json({
             team: teamData.name,
             logo: teamData.logo,
-            activePlayers
+            activePlayers: playersWithHeadshots
         });
 
     } catch (error) {
