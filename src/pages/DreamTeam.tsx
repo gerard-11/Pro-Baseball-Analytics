@@ -91,24 +91,24 @@ export const DreamTeam = () => {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-8">
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 sm:p-6 md:p-8">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
-                    <h1 className="text-4xl font-bold text-gray-800 mb-2 text-center">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 text-center">
                         My Dream Team
                     </h1>
-                    <p className="text-center text-gray-600 mb-8">
+                    <p className="text-center text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 md:mb-8">
                         Drag players to their positions to build your perfect lineup
                     </p>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 min-h-96">
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 min-h-96">
                         {/* Main Field */}
-                        <div className="lg:col-span-3">
-                            <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-blue-200 flex flex-col">
+                        <div className="md:col-span-2 lg:col-span-3">
+                            <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 border-4 border-blue-200 flex flex-col">
                                 {/* Baseball Field with Grid Layout */}
                                 <div className="w-full flex-1 flex flex-col">
                                     {/* Top - Pitchers (SP and RP) */}
-                                    <div className="flex justify-center gap-4 items-start mt-8">
+                                    <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 items-start mt-4 sm:mt-6 md:mt-8">
                                         <PositionSlot
                                             position="SP"
                                             player={dreamTeam.positions['SP']}
@@ -122,7 +122,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Outfield row with CF in middle */}
-                                    <div className="flex justify-between gap-4 items-start mt-8">
+                                    <div className="flex justify-between gap-2 sm:gap-3 md:gap-4 items-start mt-4 sm:mt-6 md:mt-8">
                                         <PositionSlot
                                             position="LF"
                                             player={dreamTeam.positions['LF']}
@@ -143,7 +143,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Infield - Top row (3B, SS, 2B) */}
-                                    <div className="flex justify-center gap-8 items-start mt-8">
+                                    <div className="flex justify-center gap-3 sm:gap-4 md:gap-6 items-start mt-4 sm:mt-6 md:mt-8">
                                         <PositionSlot
                                             position="3B"
                                             player={dreamTeam.positions['3B']}
@@ -162,7 +162,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Infield - Bottom row (1B, C) */}
-                                    <div className="flex justify-center gap-16 items-start mt-8">
+                                    <div className="flex justify-center gap-4 sm:gap-8 items-start mt-4 sm:mt-6 md:mt-8">
                                         <PositionSlot
                                             position="1B"
                                             player={dreamTeam.positions['1B']}
@@ -177,22 +177,22 @@ export const DreamTeam = () => {
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="mt-8 flex gap-4 justify-center flex-wrap">
+                                <div className="mt-4 sm:mt-6 md:mt-8 flex gap-2 sm:gap-3 md:gap-4 justify-center flex-wrap">
                                     <button
                                         onClick={clearDreamTeam}
-                                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300"
+                                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 sm:py-2 sm:px-6 text-xs sm:text-sm rounded-lg transition duration-300"
                                     >
                                         Clear Dream Team
                                     </button>
                                     <button
                                         onClick={handleCopy}
-                                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300"
+                                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 sm:py-2 sm:px-6 text-xs sm:text-sm rounded-lg transition duration-300"
                                     >
                                         Copy to Clipboard
                                     </button>
                                     <button
                                         onClick={handleExport}
-                                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300"
+                                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-3 sm:py-2 sm:px-6 text-xs sm:text-sm rounded-lg transition duration-300"
                                     >
                                         Export as JSON
                                     </button>
@@ -201,9 +201,9 @@ export const DreamTeam = () => {
                         </div>
 
                         {/* Available Players Sidebar */}
-                        <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8 h-fit">
-                                <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <div className="md:col-span-1 lg:col-span-1">
+                            <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 sticky top-4 sm:top-6 md:top-8 h-fit">
+                                <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                                     <span>🏟️</span>
                                     Available Players ({availablePlayers.length})
                                 </h2>

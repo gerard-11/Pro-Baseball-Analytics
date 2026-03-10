@@ -30,10 +30,10 @@ export const Toast = ({ message, isVisible, onClose, duration = 3500, type = 'su
     const { bg, icon } = TOAST_STYLES[type];
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-4">
-            <div className={`${bg} text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 max-w-sm`}>
-                <span className="text-xl">{icon}</span>
-                <span className="font-semibold">{message}</span>
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-in fade-in slide-in-from-bottom-4 mx-4 sm:mx-0">
+            <div className={`${bg} text-white px-4 py-3 sm:px-6 sm:py-4 rounded-lg shadow-lg flex items-center gap-3 max-w-xs sm:max-w-sm`}>
+                <span className="text-lg sm:text-xl flex-shrink-0">{icon}</span>
+                <span className="font-semibold text-sm sm:text-base">{message}</span>
             </div>
         </div>
     );

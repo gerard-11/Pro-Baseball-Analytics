@@ -20,18 +20,18 @@ export const TeamCard = ({name, city, logo, keyTeam}: TeamCardProps) => {
     }
 
     return (
-        <div className="bg-white shadow-md rounded-xl p-6 hover:shadow-xl transition duration-300">
+        <div className="bg-white shadow-md rounded-xl p-4 sm:p-6 hover:shadow-xl transition duration-300">
             {logo && (
                 <Link to={`/players/${keyTeam}`} onClick={handleTeamSelect}>
                     <img
                         src={logo}
                         alt={name}
-                        className="w-20 h-20 mx-auto mb-4"
+                        className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4"
                     />
                 </Link>
             )}
-            <h2 className="text-xl font-bold text-center">{name}</h2>
-            <p className="text-gray-600 text-center">{city}</p>
+            <h2 className="text-lg sm:text-xl font-bold text-center">{name}</h2>
+            <p className="text-xs sm:text-sm text-gray-600 text-center">{city}</p>
         </div>
     );
 };

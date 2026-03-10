@@ -101,47 +101,47 @@ const Players = () => {
 
             {!loading && !error && (
                 <>
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-6 p-6 bg-white shadow-md rounded-xl border-b-4 border-red-700 mb-8">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 p-4 sm:p-6 md:p-6 bg-white shadow-md rounded-xl border-b-4 border-red-700 mb-6 sm:mb-8">
                         {/* Contenedor del Logo con sombra y tamaño ajustado */}
                         <div className="flex-shrink-0 bg-gray-50 p-2 rounded-full shadow-inner border border-gray-100">
                             <img
                                 src={logo}
                                 alt={`Logo de ${team}`}
-                                className="w-20 h-20 md:w-28 md:h-28 object-contain"
+                                className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 object-contain"
                             />
                         </div>
 
                         {/* Título con tipografía fuerte y acento en rojo */}
                         <div className="flex flex-col items-center md:items-start">
                             <span className="text-xs uppercase tracking-[0.3em] text-gray-400 font-semibold">Active Roster Team</span>
-                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase italic">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-black text-slate-900 tracking-tighter uppercase italic">
                                 {team}
                             </h1>
-                            <div className="h-1.5 w-24 bg-blue-700 mt-1 rounded-full"></div>
+                            <div className="h-1.5 w-20 sm:w-24 bg-blue-700 mt-1 rounded-full"></div>
                         </div>
                     </div>
 
                     {players.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-dashed border-gray-300">
-                            <div className="text-6xl mb-4">📋</div>
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2">No hay datos disponibles</h2>
-                            <p className="text-gray-600 text-center max-w-md mb-4">
+                        <div className="flex flex-col items-center justify-center py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-dashed border-gray-300 px-4">
+                            <div className="text-4xl sm:text-5xl md:text-6xl mb-4">📋</div>
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">No hay datos disponibles</h2>
+                            <p className="text-xs sm:text-sm text-gray-600 text-center max-w-md mb-4">
                                 No se encontraron jugadores activos para <span className="font-semibold">{team}</span>. Esto podría significar que:
                             </p>
-                            <ul className="text-gray-600 text-sm space-y-2 mb-6">
+                            <ul className="text-xs sm:text-sm text-gray-600 space-y-2 mb-6">
                                 <li>✓ Los datos aún se están cargando desde la API</li>
                                 <li>✓ La API externa no tiene información para este equipo</li>
                                 <li>✓ No hay jugadores activos registrados</li>
                             </ul>
                             <button
                                 onClick={() => window.location.reload()}
-                                className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition duration-300"
+                                className="px-4 py-2 sm:px-6 sm:py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-xs sm:text-sm rounded-lg transition duration-300"
                             >
                                 Reintentar
                             </button>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 w-full">
                             {players.map((player, index) => (
                                     <PlayerCard
                                         PhotoUrl={player.PhotoUrl}

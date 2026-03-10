@@ -7,27 +7,27 @@ export const Loader = ({ message = "Cargando...", size = "medium" }: LoaderProps
     const sizeClasses = {
         small: "w-8 h-8",
         medium: "w-16 h-16",
-        large: "w-24 h-24"
+        large: "w-20 sm:w-24 h-20 sm:h-24"
     };
 
     const containerHeight = {
-        small: "py-8",
-        medium: "py-16",
-        large: "py-24"
+        small: "py-6 sm:py-8",
+        medium: "py-12 sm:py-16",
+        large: "py-16 sm:py-24"
     };
 
     return (
         <div className={`flex flex-col items-center justify-center ${containerHeight[size]}`}>
             {/* Baseball Animation */}
-            <div className="relative mb-6">
+            <div className="relative mb-4 sm:mb-6">
                 <div className={`${sizeClasses[size]} animate-spin rounded-full border-4 border-blue-200 border-t-blue-600`}></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl">⚾</span>
+                    <span className="text-lg sm:text-2xl">⚾</span>
                 </div>
             </div>
 
             {/* Loading Text */}
-            <p className="text-gray-600 font-semibold text-center">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 font-semibold text-center px-4">
                 {message}
             </p>
 

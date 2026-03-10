@@ -30,7 +30,7 @@ export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotP
     const isValidDrag = active && (active.data as any)?.player?.Position === position;
     const showHighlight = isOver && isValidDrag;
 
-    const sizeClasses = 'w-32 h-40';
+    const sizeClasses = 'w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40';
 
     return (
         <div
@@ -50,7 +50,7 @@ export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotP
                 />
             ) : (
                 <div className="text-center pointer-events-none">
-                    <p className="text-lg font-bold text-gray-500">{position}</p>
+                    <p className="text-xs sm:text-sm md:text-lg font-bold text-gray-500">{position}</p>
                     <p className="text-xs text-gray-400">{POSITION_NAMES[position]}</p>
                     <p className="text-xs text-gray-300 mt-1">Drag here</p>
                 </div>

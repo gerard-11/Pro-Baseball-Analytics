@@ -33,7 +33,7 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 {...attributes}
                 className={`
                     bg-white border-3 border-blue-500 rounded-lg shadow-md hover:shadow-xl
-                    transition duration-300 p-2 w-32 h-40 text-center cursor-pointer flex flex-col items-center justify-center
+                    transition duration-300 p-1 sm:p-2 w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40 text-center cursor-pointer flex flex-col items-center justify-center
                     ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
                 `}
                 onMouseEnter={() => setShowRemoveBtn(true)}
@@ -42,10 +42,10 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 <img
                     src={player.PhotoUrl}
                     alt={player.FirstName}
-                    className="w-12 h-12 mx-auto rounded-full object-cover border-2 border-blue-100 mb-1"
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mx-auto rounded-full object-cover border-2 border-blue-100 mb-1"
                 />
 
-                <h2 className="text-sm font-bold text-gray-800 line-clamp-2">
+                <h2 className="text-xs sm:text-sm font-bold text-gray-800 line-clamp-2">
                     {player.FirstName} {player.LastName}
                 </h2>
 
