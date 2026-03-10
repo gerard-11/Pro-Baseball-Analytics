@@ -5,6 +5,7 @@ import teamsRouter from "./routes/allTeams.routes.js";
 import playersByTeamRouter from "./routes/playersByTeam.routes.js";
 import headshotsRouter from "./routes/headshots.routes.js";
 import searchRouter from "./routes/search.routes.js";
+import newsRouter from "./routes/news.routes.js";
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ app.use("/api/allTeams", teamsRouter);
 app.use("/api/playersByTeam", playersByTeamRouter);
 app.use("/api/headshots", headshotsRouter);
 app.use("/api/search", searchRouter);
+app.use("/api/news", newsRouter);
 
 app.listen(3000, () => {
     console.log(`Server running on port 3000`);
