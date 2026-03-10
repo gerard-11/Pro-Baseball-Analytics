@@ -19,7 +19,8 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
         },
     });
 
-    const handleRemoveClick = () => {
+    const handleRemoveClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
         if (onRemove) {
             onRemove();
         }
@@ -33,11 +34,13 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 {...attributes}
                 className={`
                     bg-white border-3 border-blue-500 rounded-lg shadow-md hover:shadow-xl
-                    transition duration-300 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 text-center cursor-pointer flex flex-col items-center justify-center
+                    transition duration-300 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 text-center cursor-grab active:cursor-grabbing flex flex-col items-center justify-center touch-none
                     ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
                 `}
                 onMouseEnter={() => setShowRemoveBtn(true)}
                 onMouseLeave={() => setShowRemoveBtn(false)}
+                onTouchStart={() => setShowRemoveBtn(true)}
+                onTouchEnd={() => setShowRemoveBtn(false)}
             >
                 <img
                     src={player.PhotoUrl}
@@ -62,9 +65,7 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
             {onRemove && showRemoveBtn && (
                 <button
                     onClick={handleRemoveClick}
-                    onMouseEnter={() => setShowRemoveBtn(true)}
-
-                    className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs transition duration-1000 shadow-lg"
+                    className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs transition duration-1000 shadow-lg z-10"
                     title="Remove player"
                 >
                     ✕
