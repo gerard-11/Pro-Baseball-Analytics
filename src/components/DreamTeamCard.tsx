@@ -34,7 +34,7 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 {...attributes}
                 className={`
                     bg-white border-3 border-blue-500 rounded-lg shadow-md hover:shadow-xl
-                    transition duration-300 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 text-center cursor-grab active:cursor-grabbing flex flex-col items-center justify-center touch-none
+                    transition duration-300 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-20 sm:h-28 md:w-24 md:h-32 lg:w-28 lg:h-36 max-w-xs text-center cursor-grab active:cursor-grabbing flex flex-col items-center justify-center touch-none
                     ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
                 `}
                 onMouseEnter={() => setShowRemoveBtn(true)}

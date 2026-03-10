@@ -30,7 +30,7 @@ export const PositionSlot = ({ position, player, onRemovePlayer }: PositionSlotP
     const isValidDrag = active && (active.data as any)?.player?.Position === position;
     const showHighlight = isOver && isValidDrag;
 
-    const sizeClasses = 'w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40';
+    const sizeClasses = 'w-20 h-28 sm:w-20 sm:h-28 md:w-24 md:h-32 lg:w-28 lg:h-36 max-w-xs';
 
     return (
         <div
