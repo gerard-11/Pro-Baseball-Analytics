@@ -21,11 +21,11 @@ export const AvailablePlayerItem = ({ player, onRemove }: AvailablePlayerItemPro
             {...listeners}
             {...attributes}
             className={`
-                p-2 sm:p-3 border-l-4 border-blue-500 bg-blue-50 rounded cursor-move hover:bg-blue-100
+                p-2 sm:p-2 md:p-3 border-l-4 border-blue-500 bg-blue-50 rounded cursor-move hover:bg-blue-100
                 transition duration-200 ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
             `}
         >
-            <p className="font-semibold text-xs sm:text-sm text-gray-800">
+            <p className="font-semibold text-xs sm:text-sm text-gray-800 line-clamp-1">
                 {player.FirstName} {player.LastName}
             </p>
             <p className="text-xs text-gray-600 font-medium">

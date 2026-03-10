@@ -33,7 +33,7 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 {...attributes}
                 className={`
                     bg-white border-3 border-blue-500 rounded-lg shadow-md hover:shadow-xl
-                    transition duration-300 p-1 sm:p-2 w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40 text-center cursor-pointer flex flex-col items-center justify-center
+                    transition duration-300 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 text-center cursor-pointer flex flex-col items-center justify-center
                     ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
                 `}
                 onMouseEnter={() => setShowRemoveBtn(true)}
@@ -42,10 +42,10 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 <img
                     src={player.PhotoUrl}
                     alt={player.FirstName}
-                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mx-auto rounded-full object-cover border-2 border-blue-100 mb-1"
+                    className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto rounded-full object-cover border-2 border-blue-100 mb-1"
                 />
 
-                <h2 className="text-xs sm:text-sm font-bold text-gray-800 line-clamp-2">
+                <h2 className="text-xs sm:text-xs md:text-sm font-bold text-gray-800 line-clamp-2">
                     {player.FirstName} {player.LastName}
                 </h2>
 
@@ -55,7 +55,7 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
 
                 <div className="space-y-0 text-xs text-gray-700">
                     <p><span className="font-semibold">#</span> {player.Jersey}</p>
-                    <p><span className="font-semibold">Pos:</span> {player.Position}</p>
+                    <p className="hidden sm:block"><span className="font-semibold">Pos:</span> {player.Position}</p>
                 </div>
             </div>
 

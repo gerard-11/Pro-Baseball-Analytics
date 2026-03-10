@@ -104,11 +104,11 @@ export const DreamTeam = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 min-h-96">
                         {/* Main Field */}
                         <div className="md:col-span-2 lg:col-span-3">
-                            <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 border-4 border-blue-200 flex flex-col">
+                            <div className="bg-white rounded-2xl shadow-2xl p-2 sm:p-4 md:p-6 lg:p-8 border-4 border-blue-200 flex flex-col overflow-x-hidden">
                                 {/* Baseball Field with Grid Layout */}
                                 <div className="w-full flex-1 flex flex-col">
                                     {/* Top - Pitchers (SP and RP) */}
-                                    <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 items-start mt-4 sm:mt-6 md:mt-8">
+                                    <div className="flex justify-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 items-start mt-2 sm:mt-4 md:mt-6 lg:mt-8">
                                         <PositionSlot
                                             position="SP"
                                             player={dreamTeam.positions['SP']}
@@ -122,7 +122,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Outfield row with CF in middle */}
-                                    <div className="flex justify-between gap-2 sm:gap-3 md:gap-4 items-start mt-4 sm:mt-6 md:mt-8">
+                                    <div className="flex justify-between gap-1 sm:gap-2 md:gap-3 lg:gap-4 items-start mt-2 sm:mt-4 md:mt-6 lg:mt-8">
                                         <PositionSlot
                                             position="LF"
                                             player={dreamTeam.positions['LF']}
@@ -143,7 +143,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Infield - Top row (3B, SS, 2B) */}
-                                    <div className="flex justify-center gap-3 sm:gap-4 md:gap-6 items-start mt-4 sm:mt-6 md:mt-8">
+                                    <div className="flex justify-center gap-1 sm:gap-2 md:gap-4 lg:gap-6 items-start mt-2 sm:mt-4 md:mt-6 lg:mt-8">
                                         <PositionSlot
                                             position="3B"
                                             player={dreamTeam.positions['3B']}
@@ -162,7 +162,7 @@ export const DreamTeam = () => {
                                     </div>
 
                                     {/* Infield - Bottom row (1B, C) */}
-                                    <div className="flex justify-center gap-4 sm:gap-8 items-start mt-4 sm:mt-6 md:mt-8">
+                                    <div className="flex justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 items-start mt-2 sm:mt-4 md:mt-6 lg:mt-8">
                                         <PositionSlot
                                             position="1B"
                                             player={dreamTeam.positions['1B']}
