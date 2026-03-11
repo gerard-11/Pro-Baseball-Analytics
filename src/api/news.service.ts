@@ -13,9 +13,7 @@ export interface News {
 
 export const getNews = async (): Promise<News[]> => {
     try {
-        console.log("📡 Fetching MLB news from API...");
         const response = await apiClient.get("/news");
-        console.log("✅ News data received:", response.data);
         return response.data;
     } catch (error) {
         console.error("❌ Error fetching news:", error);
