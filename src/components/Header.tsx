@@ -29,7 +29,7 @@ const Header=()=> {
                                 }`
                             }
                         >
-                            🔍 Search
+                            🔍 Search Players
                         </NavLink>
                     </div>
 

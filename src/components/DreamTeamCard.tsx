@@ -34,7 +34,7 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
                 {...attributes}
                 className={`
                     bg-white border-3 border-blue-500 rounded-lg shadow-md hover:shadow-xl
-                    transition duration-300 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-20 sm:h-28 md:w-24 md:h-32 lg:w-28 lg:h-36 max-w-xs text-center cursor-grab active:cursor-grabbing flex flex-col items-center justify-center touch-none
+                    transition duration-500 p-1 sm:p-1 md:p-2 w-20 h-28 sm:w-20 sm:h-28 md:w-24 md:h-32 lg:w-28 lg:h-36 max-w-xs text-center cursor-grab active:cursor-grabbing flex flex-col items-center justify-center touch-none
                     ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}
                 `}
                 onMouseEnter={() => setShowRemoveBtn(true)}
@@ -65,7 +65,8 @@ export const DreamTeamCard = ({ player, position, onRemove }: DreamTeamCardProps
             {onRemove && showRemoveBtn && (
                 <button
                     onClick={handleRemoveClick}
-                    className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs transition duration-1000 shadow-lg z-10"
+                    onMouseEnter={() => setShowRemoveBtn(true)}
+                    className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs transition duration-2000 shadow-lg z-10"
                     title="Remove player"
                 >
                     ✕
